@@ -36,4 +36,4 @@ a self-driving car might look like this ([source](https://www.youtube.com/watch?
 
 $$ c_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $$
 
-where $c_t$ is the cost at time $t$, $e_t$ is the deviation from the reference path ($e_t = x_t - x^ref_t$), and $u_t$ is the steering command (vector containing angular acceleration and angular velocity). $Q$ and $R$ are matrices with constants that determine the weights of each of these factors.
+where $c_t$ is the cost at time $t$, $e_t$ is the deviation from the reference path $(e_t = x_t - x^ref_t)$, and $u_t$ is the acceleration and steering rate (a vector containing  acceleration and angular velocity). $Q$ and $R$ are matrices with constants that determine the weights of each of these factors.
