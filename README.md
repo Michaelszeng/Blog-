@@ -29,4 +29,9 @@ Another method of adapting a linear controller for a non-linear system is to use
 So, back to our example with the autonomous car, if the car is about to round a corner, the motion profile will make the target velocity lower, and the target position of the car less far away. This will make the PID controller slow the car down. 
 
 ### A Non-linear Controller
-Model Predictive Control (MPC)
+Model Predictive Control (MPC) is a common non-linear controller used in robotics. To explain how it works, I'll once again take the example of a self-driving car.
+
+Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately. For example, a cost function for 
+a self-driving car might look like this:
+
+$ cost_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $
