@@ -31,13 +31,19 @@ So, back to our example with the autonomous car, if the car is about to round a 
 ### A Non-linear Controller
 Model Predictive Control (MPC) is a common non-linear controller used in robotics. To explain how it works, I'll once again take the example of a self-driving car.
 
-Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately. For example, a cost function for 
-a self-driving car might look like this ([source](https://www.youtube.com/watch?v=XaD8Lngfkzk)):
+Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately, for a given horizon (an amount of time to look forward in the trajectory). For example, a cost function for a self-driving car might look like this ([source](https://www.youtube.com/watch?v=XaD8Lngfkzk)):
 
 $$ c_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $$
 
-where $c_t$ is the cost at time $t$, $e_t$ is the deviation from the reference path $(e_t = x_t - x^{ref}_t)$, and $u_t$ is the acceleration and steering rate (a vector containing  acceleration and angular velocity). $Q_t$ and $R_t$ are matrices with constants that determine the weights of each of these factors. Effectively, what this cost function is saying, is that we don't like it when the car deviates from its reference trajectory, and we don't like it when the care accelerates or turns quickly (uncomfortable for passengers).
+where $c_t$ is the cost at time $t$, $e_t$ is a vector containing the deviation of the car's predicted path from the reference path over the horizon $(e_t = x_t - x^{ref}_t)$, and $u_t$ is a vector containing the car's acceleration and steering rate (angular velocity). $Q_t$ and $R_t$ are matrices with constants that determine the weights of each of these factors. Effectively, what this cost function is saying, is that we don't like it when the car deviates from its reference trajectory, and we don't like it when the car accelerates or turns quickly (uncomfortable for passengers). 
 
-Next, MPC defines constraints--states and inputs that are now allowed. For example, an obstacle on the road would define a state constraint; the car cannot collide with the obstacle. Input constraints could be maximum velocities or accelerations, for safety or comfort reasons.
+Next, MPC defines constraints--states and inputs that are now allowed. For example, an obstacle on the road would define a state constraint--a region the car's predicted trajector cannot intersect; the car cannot collide with the obstacle. Input constraints could be maximum velocities or accelerations, for safety or comfort reasons.
 
-Finally, MPC is basically a big optimization problem.
+Finally, MPC is a big optimization problem. We want to choose inputs (i.e. target position, acceleration, and angular velocity), where the inputs fall within the set of feasible values (defined by the state and input constraints), such that the cost function is minimized. Usually, there is no closed-form solution to the optimization problem; they must be solved iteratively (i.e. taking the gradient of the cost function and running gradient descent (tfw 18.C06 (li. alg. and optimization) is kinda useful :D)). Once we have solved for the optimal inputs, we can simply apply these to the system and we should get a desired output!
+
+![mpc](https://user-images.githubusercontent.com/35478698/216149519-3244919d-5c9f-48d4-87aa-6a8051b813f6.gif)
+(so pretty :) (gif source: https://www.youtube.com/watch?v=XaD8Lngfkzk))
+
+One note is that this algorithm relies heavily on our model of the car (our prediction of the car's trajectory given certain control inputs). And the larger the horizon, the longer the trajectory our model has to predict, and the more room for error. This is why it's important to have an accurate model of the system first.
+
+Why is MPC good? Because it solves a different optimization problem every time step, it's not a linear controller; it adapts well to a variety of non-linear systems. It's quite powerful as long as the horizon is chosen well and the model of the system is very accurate. Finally, it the future into account, and will not be taken off guard by sudden changes in the environment.
