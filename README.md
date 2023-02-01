@@ -7,6 +7,8 @@ Most controllers (i.e.) PID, are linear controllers. Linear Controllers are simp
 
 <sup>1. i.e. Transfer Functions to model the system (what output it produces for a particular input), Root Locus Plots to analyze the impact of one parameter on a system, Nyquist Plots to determine if a system is stable.</sup>
 
+## Solutions
+
 Much of the time, we will use a linear controller anyway. Sometimes, if needed, we can make some modifications to a linear controller to make it more fit for the job.
 
 In the most simple case, most systems, even if they aren't linear, are close to linear with an "operating region". So, as long as the linear controller keeps the system in this region, the linear controller is relatively adequate.
@@ -26,3 +28,5 @@ Another method of adapting a linear controller for a non-linear system is to use
 
 So, back to our example with the autonomous car, if the car is about to round a corner, the motion profile will make the target velocity lower, and the target position of the car less far away. This will make the PID controller slow the car down. 
 
+### A Non-linear Controller
+Model Predictive Control (MPC)
