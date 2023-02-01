@@ -32,6 +32,8 @@ So, back to our example with the autonomous car, if the car is about to round a 
 Model Predictive Control (MPC) is a common non-linear controller used in robotics. To explain how it works, I'll once again take the example of a self-driving car.
 
 Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately. For example, a cost function for 
-a self-driving car might look like this:
+a self-driving car might look like this ([source](https://www.youtube.com/watch?v=XaD8Lngfkzk):
 
-$$ cost_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $$
+$$ c_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $$
+
+where $$c_t$$ is the cost at time $$t$$, $$e_t$$ is the deviation from the reference path ($$e_t = x_t - x^ref_t$$), and $$u_t$$ is the steering command (vector containing angular acceleration and angular velocity). $$Q$$ and $$R$$ are matrices with constants that determine the weights of each of these factors.
