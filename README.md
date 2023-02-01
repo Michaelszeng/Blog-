@@ -2,7 +2,7 @@
 
 Went down an internet rabbit hole and cleared up my idea of Control Theory a lot. Wanted to write some of it down so here it is!
 
-## The Problem:
+## The Problem
 Most controllers (i.e.) PID, are linear controllers. Linear Controllers are simpler to understand, simpler to implement, and the control theory community has already developed tons of mathematical tools to solve and use them<sup>1</sup>. They theoretically only work well on linear systems, aka systems that follow homogeneity (scaling input scales output) and superposition (adding inputs adds outputs). However, no systems in real life are this way.
 
 <sup>1. i.e. Transfer Functions to model the system (what output it produces for a particular input), Root Locus Plots to analyze the impact of one parameter on a system, Nyquist Plots to determine if a system is stable.</sup>
