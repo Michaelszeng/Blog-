@@ -34,4 +34,4 @@ Model Predictive Control (MPC) is a common non-linear controller used in robotic
 Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately. For example, a cost function for 
 a self-driving car might look like this:
 
-$ cost_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $
+$$ cost_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $$
