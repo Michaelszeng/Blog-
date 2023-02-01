@@ -31,7 +31,7 @@ So, back to our example with the autonomous car, if the car is about to round a 
 ### A Non-linear Controller
 Model Predictive Control (MPC) is a common non-linear controller used in robotics. To explain how it works, I'll once again take the example of a self-driving car.
 
-Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately, for a given horizon (an amount of time to look forward in the trajectory). For example, a cost function for a self-driving car might look like this ([source](https://www.youtube.com/watch?v=XaD8Lngfkzk)):
+Firstly, MPC defines a cost function. This takes into account everything that the controller needs to care about, each weighted appropriately, for a given horizon (an amount of time to look forward in the trajectory). This should be carefully chosen by scenario; for example, a race car might heavily penalize low speeds, while a road car would not. A simple cost function for a self-driving road car might look like this ([source](https://www.youtube.com/watch?v=XaD8Lngfkzk)):
 
 $$ c_t(x_t, u_t) = e^T_t Q_t e_t + u^T_t R_t u_t $$
 
@@ -44,6 +44,10 @@ Finally, MPC is a big optimization problem. We want to choose inputs (i.e. targe
 ![mpc](https://user-images.githubusercontent.com/35478698/216149519-3244919d-5c9f-48d4-87aa-6a8051b813f6.gif)
 (so pretty :) (gif source: https://www.youtube.com/watch?v=XaD8Lngfkzk))
 
-One note is that this algorithm relies heavily on our model of the car (our prediction of the car's trajectory given certain control inputs). And the larger the horizon, the longer the trajectory our model has to predict, and the more room for error. This is why it's important to have an accurate model of the system first.
+One note is that this algorithm relies heavily on our model of the car (our prediction of the car's trajectory given certain control inputs). And the larger the horizon, the better MPC is at adapting to unexpected conditions, but the error from our prediction model will also accumulate over this time. In addition, there is always a tradeoff to be made between accuracy of the model and complexity/time to compute.
 
-Why is MPC good? Because it solves a different optimization problem every time step, it's not a linear controller; it adapts well to a variety of non-linear systems. It's quite powerful as long as the horizon is chosen well and the model of the system is very accurate. Finally, it the future into account, and will not be taken off guard by sudden changes in the environment.
+To actually come up with this prediction model, one common solution is to collect real-world data (say, using a real car) and create trendlines to find a relationship between the output and input variables of your MPC. Instead of creating trendlines, another way to find this relationship between otuput and input variables, is to cast it as another optimization problem--try to find the parameters of your prediction model that will minimize the difference between your model and the real-world data.
+
+Why is MPC good? Because it solves a different optimization problem every time step, it's not a linear controller; it adapts well to a variety of non-linear systems. It's quite powerful as long as the horizon and cost function are chosen well, and the model of the system is very accurate. Finally, it the future into account, and will not be taken off guard by sudden changes in the environment.
+
+One significant downfall of MPC, however, is that it is very computationally heavy; normally this computation would be done online.
