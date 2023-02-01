@@ -5,7 +5,7 @@ Went down an internet rabbit hole and cleared up my idea of Control Theory a lot
 ## The Problem:
 Most controllers (i.e.) PID, are linear controllers. Linear Controllers are simpler to understand, simpler to implement, and the control theory community has already developed tons of mathematical tools to solve and use them<sup>1</sup>. They theoretically only work well on linear systems, aka systems that follow homogeneity (scaling input scales output) and superposition (adding inputs adds outputs). However, no systems in real life are this way.
 
-<font size="3">1. i.e. Bode Plots to analyze frequency response of an oscillating system, Transfer Functions to model the system (what output it produces for a particular input), Root Locus Plots to analyze the impact of one parameter on a system, Nyquist Plots to determine if a system is stable.</font>
+<font size="1">1.</font><font size="2"> i.e. Bode Plots to analyze frequency response of an oscillating system, Transfer Functions to model the system (what output it produces for a particular input), Root Locus Plots to analyze the impact of one parameter on a system, Nyquist Plots to determine if a system is stable.</font>
 
 Much of the time, we will use a linear controller anyway. Sometimes, if needed, we can make some modifications to a linear controller to make it more fit for the job.
 
